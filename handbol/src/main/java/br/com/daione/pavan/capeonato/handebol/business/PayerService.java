@@ -15,11 +15,9 @@ public class PayerService {
 	Logger logger = LoggerFactory.getLogger(PayerService.class);
 	@Autowired
 	PlayerRepository playerRepository;
-	@Autowired
-	private UtilPlayer util;
 
 	public Mono<Player> create(Player player) {
-		this.util.validate(player);
+		UtilPlayer.validate(player);
 		return playerRepository.save(player);
 	}
 
@@ -33,7 +31,7 @@ public class PayerService {
 	public Mono<Player> update(String id, Player updatingPlayer) {
 
 		return this.playerRepository.findById(id).map(player -> {
-			Player newPlayer = this.util.update(player, updatingPlayer);
+			Player newPlayer = UtilPlayer.update(player, updatingPlayer);
 			return newPlayer;
 		}).doOnNext(player -> this.playerRepository.save(player))
 				.doOnNext(player -> logger.info("SALVOU AS INFORMACOES ===> " + "\n Name: " + player.getName()

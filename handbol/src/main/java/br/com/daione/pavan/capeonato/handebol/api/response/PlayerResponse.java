@@ -1,4 +1,4 @@
-package br.com.daione.pavan.capeonato.handebol.response;
+package br.com.daione.pavan.capeonato.handebol.api.response;
 
 import java.time.Instant;
 

@@ -1,26 +1,23 @@
 package br.com.daione.pavan.capeonato.handebol.infraestructure.utils;
 
 import br.com.daione.pavan.capeonato.handebol.api.require.TeamRequire;
+import br.com.daione.pavan.capeonato.handebol.api.response.TeamResponse;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Team;
-import br.com.daione.pavan.capeonato.handebol.response.TeamResponse;
 import reactor.core.publisher.Flux;
 
 import org.jboss.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Component
-public class UtilTeam {
+public abstract class UtilTeam {
 	private static Logger LOG = Logger.getLogger(UtilTeam.class);
 
-	@Autowired
-	private UtilError utilError;
+	public static Team updateUtil(Team oldTeamm, Team newTeam) {
 
-	public Team updateUtil(Team oldTeamm, Team newTeam) {
 		oldTeamm.setName(StringUtils.isEmpty(newTeam.getName()) ? oldTeamm.getName() : newTeam.getName());
 		oldTeamm.setStadium(newTeam.getStadium() == null ? oldTeamm.getStadium() : newTeam.getStadium());
 
@@ -39,43 +36,43 @@ public class UtilTeam {
 		return oldTeamm;
 	}
 
-	public List<Player> removePlayer(List<Player> players, Player player) {
+	public static List<Player> removePlayer(List<Player> players, Player player) {
 		players.remove(player);
 		return players;
 	}
 
-	public Team validateNewTeam(TeamRequire newTeam) {
+	public static Team validateNewTeam(TeamRequire newTeam) {
 
 		newTeam.getPlayers().count().subscribe(counter -> {
 			LOG.infof("O valor do counter é {}", counter);
 			if (counter > 14) {
-				this.utilError.badRequest("Um time não pode ter mais de 14 integrantes.");
+				UtilError.badRequest("Um time não pode ter mais de 14 integrantes.");
 			}
 
 			if (counter < 14) {
-				this.utilError.badRequest("Um time não pode ter menos que 14 integrantes.");
+				UtilError.badRequest("Um time não pode ter menos que 14 integrantes.");
 			}
 		});
 
 		if (StringUtils.isEmpty(newTeam.getName())) {
-			this.utilError.badRequest("Você não pode inserir um time sem nome");
+			UtilError.badRequest("Você não pode inserir um time sem nome");
 		}
 
 		if (StringUtils.isEmpty(newTeam.getStadium())) {
-			this.utilError.badRequest("Você não pode inserir um novo time sem um estádio. ");
+			UtilError.badRequest("Você não pode inserir um novo time sem um estádio. ");
 		}
 
-		Team team = this.teamBuilder(newTeam);
+		Team team = teamBuilder(newTeam);
 		return team;
 	}
 
-	public TeamResponse responseBuilder(Team team) {
+	public static TeamResponse responseBuilder(Team team) {
 		return new TeamResponse().setNameTeaam(team.getName()).setPlayers(team.getPlayers())
 				.setStadium(team.getStadium());
 
 	}
 
-	public Team teamBuilder(TeamRequire newTeam) {
+	public static Team teamBuilder(TeamRequire newTeam) {
 
 		Team team = new Team();
 

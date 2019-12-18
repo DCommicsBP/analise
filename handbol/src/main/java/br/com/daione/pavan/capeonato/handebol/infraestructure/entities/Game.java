@@ -17,35 +17,35 @@ public class Game {
 		return id;
 	}
 
-	public Game setId(String id) {
+	public void setId(String id) {
 		this.id = id;
-		return this;
+		
 	}
 
 	public Instant getDate() {
 		return date;
 	}
 
-	public Game setDate(Instant date) {
+	public void setDate(Instant date) {
 		this.date = date;
-		return this;
+	
 	}
 
 	public Team getHouse() {
 		return house;
 	}
 
-	public Game setHouse(Team house) {
+	public void setHouse(Team house) {
 		this.house = house;
-		return this;
+	
 	}
 
 	public Team getVisitant() {
 		return visitant;
 	}
 
-	public Game setVisitant(Team visitant) {
+	public void setVisitant(Team visitant) {
 		this.visitant = visitant;
-		return this;
+	
 	}
 }

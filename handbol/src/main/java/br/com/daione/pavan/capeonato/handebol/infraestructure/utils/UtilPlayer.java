@@ -1,33 +1,32 @@
 package br.com.daione.pavan.capeonato.handebol.infraestructure.utils;
 
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
-import br.com.daione.pavan.capeonato.handebol.infraestructure.errors.BadRequest;
 import io.netty.util.internal.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public class UtilPlayer {
+public abstract class UtilPlayer {
 
-	public void validate(Player player) {
+	public static void validate(Player player) {
 		if (player.getDateOfBirth() == null) {
-			throw new BadRequest("Não pode inserir um novo jogador sem uma data. ");
+			UtilError.badRequest("Não pode inserir um novo jogador sem uma data. ");
 		}
 
 		if (player.getGenre() == null) {
-			throw new BadRequest("Não pode inserir um jogador sem um gênero.");
+			UtilError.badRequest("Não pode inserir um jogador sem um gênero.");
 		}
 
 		if (player.getHight() <= 0.0) {
-			throw new BadRequest("Não pode inserir jogador sem altura");
+			UtilError.badRequest("Não pode inserir jogador sem altura");
 		}
 
 		if (StringUtil.isNullOrEmpty(player.getName())) {
-			throw new BadRequest("Não pode inserir um jogador sem nome");
+			UtilError.badRequest("Não pode inserir um jogador sem nome");
 		}
 	}
 
-	public Player update(Player player, Player updatingPlayer) {
+	public static Player update(Player player, Player updatingPlayer) {
 		player.setCapitain(updatingPlayer.isCapitain());
 		player.setDateOfBirth(
 				updatingPlayer.getDateOfBirth() == null ? player.getDateOfBirth() : updatingPlayer.getDateOfBirth());

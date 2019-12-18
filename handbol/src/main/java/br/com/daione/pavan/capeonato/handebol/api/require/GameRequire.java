@@ -2,30 +2,35 @@ package br.com.daione.pavan.capeonato.handebol.api.require;
 
 import java.time.Instant;
 
+import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Team;
+
 public class GameRequire {
-	private int idVisitant; 
-	private int idCommander; 
+	private Team visitant;
+	private Team commander;
 	private Instant date;
-	
-	public int getIdVisitant() {
-		return idVisitant;
+
+	public Team getVisitant() {
+		return visitant;
 	}
-	public void setIdVisitant(int idVisitant) {
-		this.idVisitant = idVisitant;
+
+	public void setVisitant(Team visitant) {
+		this.visitant = visitant;
 	}
-	public int getIdCommander() {
-		return idCommander;
+
+	public Team getCommander() {
+		return commander;
 	}
-	public void setIdCommander(int idCommander) {
-		this.idCommander = idCommander;
+
+	public void setCommander(Team commander) {
+		this.commander = commander;
 	}
+
 	public Instant getDate() {
 		return date;
 	}
+
 	public void setDate(Instant date) {
 		this.date = date;
 	}
-	
-	
 
 }

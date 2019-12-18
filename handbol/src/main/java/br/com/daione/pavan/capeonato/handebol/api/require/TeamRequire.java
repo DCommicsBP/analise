@@ -1,7 +1,5 @@
 package br.com.daione.pavan.capeonato.handebol.api.require;
 
-import java.util.List;
-
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Stadium;
 import reactor.core.publisher.Flux;

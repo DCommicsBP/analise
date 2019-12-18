@@ -1,4 +1,4 @@
-package br.com.daione.pavan.capeonato.handebol.response;
+package br.com.daione.pavan.capeonato.handebol.api.response;
 
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Stadium;
