@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 public class Team {
 	@Id
 	private String id;
-	private String name;
+	private String name;	
 	private Flux<Player> players;
 	private Stadium stadium;
 

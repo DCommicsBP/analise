@@ -13,25 +13,27 @@ import reactor.core.publisher.Mono;
 @Service
 public class PayerService {
 	Logger logger = LoggerFactory.getLogger(PayerService.class);
-	@Autowired
-	PlayerRepository playerRepository;
 
+	@Autowired
+	private PlayerRepository playerRepository;
+
+	@Autowired
+	private UtilPlayer utilPlayer; 
+	
 	public Mono<Player> create(Player player) {
-		UtilPlayer.validate(player);
+		this.utilPlayer.validate(player);
 		return playerRepository.save(player);
 	}
 
 	public Flux<Player> listAll() {
-		return this.playerRepository.findAll()
-				.doOnNext(player -> logger.info("SALVOU AS INFORMACOES ===> " + "\n Name: " + player.getName()
-						+ "\n Hight: " + player.getHight() + "\n Genre: " + player.getGenre() + "\n Date: "
-						+ player.getDateOfBirth() + "\n Id: " + player.getId()));
+		return this.playerRepository.findAll(); 
+				
 	}
 
 	public Mono<Player> update(String id, Player updatingPlayer) {
 
 		return this.playerRepository.findById(id).map(player -> {
-			Player newPlayer = UtilPlayer.update(player, updatingPlayer);
+			Player newPlayer = this.utilPlayer.update(player, updatingPlayer);
 			return newPlayer;
 		}).doOnNext(player -> this.playerRepository.save(player))
 				.doOnNext(player -> logger.info("SALVOU AS INFORMACOES ===> " + "\n Name: " + player.getName()

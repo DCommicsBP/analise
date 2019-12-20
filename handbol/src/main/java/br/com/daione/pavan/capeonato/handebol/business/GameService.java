@@ -19,14 +19,18 @@ public class GameService {
 
 	@Autowired
 	private GameRepository gameRepository;
-
+	
 	@Autowired
-	private UtilGame util;
+	private UtilGame utilGame; 
+	
+	@Autowired
+	private UtilError utilError; 
+	
 
-	public Mono<GameResponse> createGame(GameRequire game) {
-		Game gameEntity = this.util.builderGame(game);
+		public Mono<GameResponse> createGame(GameRequire game) {
+		Game gameEntity = this.utilGame.builderGame(game);
 		return this.gameRepository.save(gameEntity).map(game1 -> {
-			return UtilGame.gameResponseBuilder(game1);
+			return this.utilGame.gameResponseBuilder(game1);
 		});
 
 	}
@@ -40,33 +44,33 @@ public class GameService {
 				game1.setVisitant(game.getVisitant());
 				
 			}else {
-				UtilError.badRequest("Você não pode atualizar o registro após a data da partida."); 
+				this.utilError.badRequest("Você não pode atualizar o registro após a data da partida."); 
 			}
 
 			return game1;
 		}).flatMap(game1-> this.gameRepository.save(game1))
 		.map(game1->{
-			return UtilGame.gameResponseBuilder(game1); 
+			return this.utilGame.gameResponseBuilder(game1); 
 		});
 
 	}
 
 	public Flux<GameResponse> findAll() {
 		return this.gameRepository.findAll().map(game -> {
-			return UtilGame.gameResponseBuilder(game);
+			return this.utilGame.gameResponseBuilder(game);
 		});
 	}
 
 	public Mono<GameResponse> findGame(String id) {
 		return this.gameRepository.findById(id).map(game -> {
-			return UtilGame.gameResponseBuilder(game);
+			return this.utilGame.gameResponseBuilder(game);
 		});
 	}
 
 	public Mono<GameResponse> delete(String id) {
 		return this.gameRepository.findById(id).map(x -> {
 			this.gameRepository.delete(x);
-			return UtilGame.gameResponseBuilder(x);
+			return this.utilGame.gameResponseBuilder(x);
 		});
 	}
 

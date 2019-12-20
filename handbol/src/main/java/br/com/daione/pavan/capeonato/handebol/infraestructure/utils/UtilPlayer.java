@@ -2,31 +2,35 @@ package br.com.daione.pavan.capeonato.handebol.infraestructure.utils;
 
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import io.netty.util.internal.StringUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public abstract class UtilPlayer {
+public  class UtilPlayer {
+	@Autowired
+	private UtilError utilError; 
 
-	public static void validate(Player player) {
+	public void validate(Player player) {
 		if (player.getDateOfBirth() == null) {
-			UtilError.badRequest("Não pode inserir um novo jogador sem uma data. ");
+			this.utilError.badRequest("Não pode inserir um novo jogador sem uma data. ");
 		}
 
 		if (player.getGenre() == null) {
-			UtilError.badRequest("Não pode inserir um jogador sem um gênero.");
+			utilError.badRequest("Não pode inserir um jogador sem um gênero.");
 		}
 
 		if (player.getHight() <= 0.0) {
-			UtilError.badRequest("Não pode inserir jogador sem altura");
+			this.utilError.badRequest("Não pode inserir jogador sem altura");
 		}
 
 		if (StringUtil.isNullOrEmpty(player.getName())) {
-			UtilError.badRequest("Não pode inserir um jogador sem nome");
+			this.utilError.badRequest("Não pode inserir um jogador sem nome");
 		}
 	}
 
-	public static Player update(Player player, Player updatingPlayer) {
+	public Player update(Player player, Player updatingPlayer) {
 		player.setCapitain(updatingPlayer.isCapitain());
 		player.setDateOfBirth(
 				updatingPlayer.getDateOfBirth() == null ? player.getDateOfBirth() : updatingPlayer.getDateOfBirth());

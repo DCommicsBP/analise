@@ -18,38 +18,46 @@ public class TeamService {
 	
 	@Autowired
 	private TeamRepository teamRepository;
+	
+	
+	private UtilTeam utilTeam = new UtilTeam();  
+	
+	@Autowired
+	private UtilError utilError; 
 
-	private static final Logger LOG = Logger.getLogger(TeamService.class);
+	private Logger LOG = Logger.getLogger(TeamService.class);
 
 	public Mono<TeamResponse> createTeam(TeamRequire team) {
 		return Mono.just(team).map(team1 -> {
-			return UtilTeam.validateNewTeam(team1);
-
-		}).flatMap(team1 -> this.teamRepository.save(team1)).map(team1 -> {
-			LOG.info("DADOS SALVOS COM SUCESSO");
-			return UtilTeam.responseBuilder(team1);
+			
+			Team validated = this.utilTeam.validateNewTeam(team1);
+			this.teamRepository.save(validated).subscribe(); 
+			TeamResponse teamResponse = this.utilTeam.responseBuilder(validated); 
+			return teamResponse;
+			
 		});
 	}
 
-	public Flux<TeamResponse> listAll() {
-		return this.teamRepository.findAll().map(team -> UtilTeam.responseBuilder(team)).doOnNext(team -> {
+	public Flux<Team> listAll() {
+		return this.teamRepository.findAll(); /*
+		.map(team -> this.utilTeam.responseBuilder(team)).doOnNext(team -> {
 			LOG.info("DADOS ENCONTRDOS COM SUCESSO");
 		});
-
+		*/
 	}
 
 	public Mono<TeamResponse> findTeam(String id) {
 		return this.teamRepository.findById(id).map(team -> {
-			return UtilTeam.responseBuilder(team);
-		}).doOnError(x -> UtilError.badRequest("Não foi possível encontrar o time solicitado."));
+			return this.utilTeam.responseBuilder(team);
+		}).doOnError(x -> this.utilError.badRequest("Não foi possível encontrar o time solicitado."));
 	}
 
 	public Mono<TeamResponse> update(TeamRequire teamRequire, String id) {
-		Team newTeam = UtilTeam.teamBuilder(teamRequire);
+		Team newTeam = this.utilTeam.teamBuilder(teamRequire);
 
 		return this.teamRepository.findById(id).map(oldTeam -> {
 			Team newTeamReturn = new Team();
-			Mono.just(UtilTeam.updateUtil(oldTeam, newTeam)).map(returnTeam -> {
+			Mono.just(this.utilTeam.updateUtil(oldTeam, newTeam)).map(returnTeam -> {
 				newTeamReturn.setStadium(returnTeam.getStadium());
 				newTeamReturn.setName(returnTeam.getName());
 				newTeamReturn.setId(returnTeam.getId());
@@ -58,7 +66,7 @@ public class TeamService {
 			});
 			return newTeamReturn;
 		}).flatMap(team1 -> this.teamRepository.save(team1)).map(team1 -> {
-			return UtilTeam.responseBuilder(team1);
+			return this.utilTeam.responseBuilder(team1);
 		});
 
 	}
