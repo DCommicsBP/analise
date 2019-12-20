@@ -1,5 +1,7 @@
 package br.com.daione.pavan.capeonato.handebol.infraestructure.utils;
 
+import br.com.daione.pavan.capeonato.handebol.api.require.PlayerRequire;
+import br.com.daione.pavan.capeonato.handebol.api.response.PlayerResponse;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import io.netty.util.internal.StringUtil;
 
@@ -8,9 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
-public  class UtilPlayer {
+public class UtilPlayer {
 	@Autowired
-	private UtilError utilError; 
+	private UtilError utilError;
 
 	public void validate(Player player) {
 		if (player.getDateOfBirth() == null) {
@@ -28,6 +30,28 @@ public  class UtilPlayer {
 		if (StringUtil.isNullOrEmpty(player.getName())) {
 			this.utilError.badRequest("Não pode inserir um jogador sem nome");
 		}
+	}
+
+	public PlayerResponse playerResponseBuilder(Player player) {
+
+		this.validate(player);
+
+		return new PlayerResponse().setCapitain(player.isCapitain()).setDateOfBirth(player.getDateOfBirth())
+				.setGenre(player.getGenre()).setHight(player.getHight()).setName(player.getName());
+
+	}
+
+	public Player playerBuilder(PlayerRequire playerRequire) {
+
+		Player player = new Player();
+
+		player.setCapitain(playerRequire.isCapitain());
+		player.setDateOfBirth(playerRequire.getDateOfBirth());
+		player.setGenre(playerRequire.getGenre());
+		player.setHight(playerRequire.getHight());
+		player.setName(playerRequire.getName());
+
+		return player;
 	}
 
 	public Player update(Player player, Player updatingPlayer) {
