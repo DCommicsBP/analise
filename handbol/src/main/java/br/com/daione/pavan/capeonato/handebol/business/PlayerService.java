@@ -5,6 +5,7 @@ import br.com.daione.pavan.capeonato.handebol.api.response.PlayerResponse;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.repository.PlayerRepository;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.utils.UtilPlayer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

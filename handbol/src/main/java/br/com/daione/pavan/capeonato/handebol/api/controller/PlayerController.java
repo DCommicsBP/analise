@@ -36,7 +36,6 @@ public class PlayerController {
 		return this.playerService.listAll().doOnError(error -> {
 			this.utilError.internalServerError("Não foi possível listar os registros. ");
 		});
-
 	}
 
 	@GetMapping("/{id}")

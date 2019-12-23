@@ -1,11 +1,86 @@
-<div th:fragment="playersDetail">
-	<div class="col s12 m7">
-	<meta charset="UTF-8">
-		Nome: <input type="text"/>
-		Altura: <input type="text"/>
-		Idade: <input type="text"/>
-		Capitão: <input type="chcked"/>
-		<input type="text"/>
-		
+<article th:insert="commons/header :: header"></article>
+
+<div th:fragment="playerDetail">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<div class="container">
+		<h4>Perfil do Jogador:</h4>
+
+		<form action="#" class="col s12" th:action="@{/sendPlayer}"
+			method="post" th:object="${player}">
+			<input id="id" type="hidden" th:field="*{id}" value="${player.id}" />
+
+			<div class="input-field col s6">
+				<input id="name" type="text" class="validate"
+					th:value="${player.name}"> <label for="name">Nome:
+				</label>
+			</div>
+
+			<div class="input-field col s6">
+				<input id="hight" type="number" class="validate" step="0.01"
+					th:value="${player.hight}" /> <label for="hight"
+					data-error="Invalid number (eg. 12)">Altura: </label>
+			</div>
+			<div class="input-field col s6">
+				<input id="dateOfBirth" type="text" pattern="\d{1,2}/\d{1,2}/\d{4}"
+					th:field="${player.dateOfBirth}" th:value="${player.dateOfBirth}"
+					class="validate"> <label for="dateOfBirth">Nascimento:
+				</label>
+			</div>
+			<!-- 			<label> <input type="checkbox" th:checked="${player.captain}"/> <span>É o jogador
+					principal?</span></label>
+			<div class="input-field col s6">
+				<label></label> <select class="browser-default" th:value="${player.genre}">
+					<option value="" disabled selected>Escolha o gênero</option>
+					<option value="FEMALE">Feminino</option>
+					<option value="MALE">Masculino</option>
+				</select>
+			</div>
+ -->
+			<button class=" brown lighten-4 btn waves-effect waves-light"
+				type="submit" name="action" style="color: #986E3E !important" onclick="validate(e)">
+				Enviar <i class="material-icons right">send</i>
+			</button>
+			<button class=" brown lighten-4 btn waves-effect waves-light"
+				type="reset" name="action"
+				style="background-color: #986E3E !important; color: #d7ccc8 !important">
+				Limpar <i class="material-icons right">delete_forever</i>
+			</button>
+		</form>
 	</div>
-</div>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	<script th:src="@{/js/materialize.js}"></script>
+	<script th:src="@{/js/init.js}"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems, options);
+		});
+		
+		
+		function validate(e){
+			let valueInput = $("#dateOfBirth").val(); 
+			debugger;
+			valueInput.split('/'); 
+			if(valueInput[0] === ''|| valueInput[0] === null || valueInput[0] > 31  || valueInput[0] <=0 ){
+				 e.preventDefault();
+					return false; 
+			}
+				
+			if(valueInput[1] === ''|| valueInput[1] === null || valueInput[1] > 12  || valueInput[1] <=0 ){
+				 e.preventDefault();
+					return false; 
+			}
+			
+				
+			if(valueInput[2] === ''|| valueInput[2] === null || valueInput[2] < 1942  || valueInput[1] >=2001){
+				 e.preventDefault();
+				return false; 
+			}
+			debugger; 
+		}
+		}); 
+	</script>
+
+	<article th:insert="commons/footer:: footer"></article>

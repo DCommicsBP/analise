@@ -3,6 +3,7 @@ package br.com.daione.pavan.capeonato.handebol.api.require;
 import java.time.Instant;
 
 import br.com.daione.pavan.capeonato.handebol.api.enums.Genre;
+import br.com.daione.pavan.capeonato.handebol.api.response.PlayerResponse;
 
 public class PlayerRequire {
 	
@@ -11,9 +12,18 @@ public class PlayerRequire {
 	    private Genre genre;
 	    private double hight;
 	    private boolean isCapitain;
+	    private String id; 
+	    
+	    
 	    
 		public String getName() {
 			return name;
+		}
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
 		}
 		public void setName(String name) {
 			this.name = name;
@@ -43,6 +53,16 @@ public class PlayerRequire {
 			this.isCapitain = isCapitain;
 		}
 	    
+		public PlayerRequire playerResposneToRequire(PlayerResponse response) {
+			
+			this.setCapitain(response.isCapitain());
+			this.setDateOfBirth(Instant.parse(response.getDateOfBirth()));
+			this.setGenre(response.getGenre());
+			this.setHight(response.getHight());
+			this.setId(response.getId());
+			
+			return this; 
+		}
 	    
 
 }

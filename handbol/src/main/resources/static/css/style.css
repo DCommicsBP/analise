@@ -57,6 +57,8 @@ footer.page-footer {
 }
 
 .external-content{
-	color: 
 }
 
+th, h1, h2, h3, h4, span{
+	color: #986E3E !important;
+}

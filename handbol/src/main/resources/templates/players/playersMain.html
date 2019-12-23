@@ -1,28 +1,38 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="playersMain">
+<article th:insert="commons/header :: header"></article>
+<div th:fragment="playersMain" style="position: relative; top: 10%;">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<table>
-		<thead>
-			<tr>
-				<th>Nome</th>
-				<th>Data de Nascimento</th>
-				<th>Gênero</th>
-				<th>Altura</th>
-				<th>É capitão?</th>
-				<th>Editar</th>
-				<th>Excluir</th>
-			</tr>
-		</thead>
-		<tbody th:each="player : ${players}">
-			<tr>
-				<td th:text="${player.name}"></td>
-				<td th:text="${player.dateOfBirth}"></td>
-				<td th:text="${player.genre}"></td>
-				<td th:text="${player.hight}"></td>
-				<td th:text="${player.capitain}"></td>
-				<td th:text="${player.id}"></td>
-				<td th:text="${player.id}"></td> 
-			</tr>
-		</tbody>
+	<div class="container">
+		<h4>Jogadores</h4>
+		<table style="" class="highlight">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Data de Nascimento</th>
+					<th>Gênero</th>
+					<th>Altura</th>
+					<th>É capitão?</th>
+					<th>Ficha Técnica do Jogador</th>
+				</tr>
+			</thead>
+			<tbody th:each="player : ${players}">
+				<tr>
+					<td th:text=${player.name}><a th:href="${player.id}"></a></td>
+					<td><a th:text="${player.dateOfBirth}"></a></td>
+					<td><a th:text="${player.hight}"></a></td>
+					<td><a th:if="${player.capitain == 'FAMALE'}">Feminino</a> <a
+						th:unless="${player.genre== 'MALE'}">Masculino</a></td>
+					<td><a th:if="${player.capitain == 'true'}">Sim</a> <a
+						th:unless="${player.capitain == 'false'}">Não</a></td>
+					<td><a th:href="@{'/players-views/player-detail/{id}'(id=${player.id})}">Acessar</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="position: relative; left: 90%; top:	10px;">
+				<a
+				class="btn-floating btn-large waves-effect waves-light red"><i
+				class="material-icons">add</i></a>
+
 		</div>
-		</html>
+	</div>
+	<article th:insert="commons/footer:: footer"></article>
+</div>

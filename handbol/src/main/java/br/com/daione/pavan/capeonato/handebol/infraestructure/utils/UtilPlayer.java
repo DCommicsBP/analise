@@ -5,6 +5,15 @@ import br.com.daione.pavan.capeonato.handebol.api.response.PlayerResponse;
 import br.com.daione.pavan.capeonato.handebol.infraestructure.entities.Player;
 import io.netty.util.internal.StringUtil;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -36,8 +45,15 @@ public class UtilPlayer {
 
 		this.validate(player);
 
-		return new PlayerResponse().setCapitain(player.isCapitain()).setDateOfBirth(player.getDateOfBirth())
-				.setGenre(player.getGenre()).setHight(player.getHight()).setName(player.getName()).setId(player.getId());
+		DateTimeFormatter dateFormater = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(Locale.US)
+				.withZone(ZoneId.systemDefault());
+		String dateInString = dateFormater.format(player.getDateOfBirth());
+
+		return new PlayerResponse().setCapitain(player.isCapitain()).setDateOfBirth(dateInString)
+				.setGenre(player.getGenre())
+				.setHight(player.getHight())
+				.setName(player.getName())
+				.setId(player.getId());
 
 	}
 

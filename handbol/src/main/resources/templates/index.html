@@ -16,9 +16,7 @@
 </head>
 <body>
 
-	<article th:insert="commons/navbar :: navbar"></article>
-
-
+	<article th:replace="commons/header :: header"></article>
 
 	<div id="index-banner" class="parallax-container">
 		<div class="section no-pad-bot">
@@ -33,7 +31,6 @@
 				</div>
 				<div class="row center"></div>
 				<br> <br>
-
 			</div>
 		</div>
 		<div class="parallax"
@@ -45,29 +42,8 @@
 
 
 	<div class="container">
-		<!-- <div class="section">
-
-			  Icon Section  
-			<div class="row"
-				style="color: #986E3E !important; text-align: justify;">
-				<div style="display: none" id="playersMain">
-					<div style="opacity: 0;"
-						th:replace="players/playersMain :: playersMain"></div>
-				</div>
-				<div style="display: none" id="gameMain">
-					<div style="opacity: 0;" th:replace="game/gameMain :: gameMain"></div>
-				</div>
-				<div id="historyReplace">
-					<div th:replace="history/history:: history"></div>
-				</div>
-				<div style="display: none" id="teamsMain">
-					<h1>Teams</h1>
-				</div>
-			</div>
-		</div> -->
+		<div th:replace="history/history:: history"></div>
 	</div>
-
-
 	<div class="parallax-container valign-wrapper">
 		<div class="section no-pad-bot">
 			<div class="container"></div>
@@ -78,6 +54,7 @@
 		</div>
 	</div>
 
+	<article th:replace="commons/footer :: footer"></article>
 
 	<!--  Scripts-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

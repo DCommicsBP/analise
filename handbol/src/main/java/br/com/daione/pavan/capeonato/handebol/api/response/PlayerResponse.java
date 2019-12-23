@@ -1,12 +1,12 @@
 package br.com.daione.pavan.capeonato.handebol.api.response;
 
-import java.time.Instant;
+
 
 import br.com.daione.pavan.capeonato.handebol.api.enums.Genre;
 
 public class PlayerResponse {
 	private String name;
-	private Instant dateOfBirth;
+	private String dateOfBirth;
 	private Genre genre;
 	private double hight;
 	private boolean isCapitain;
@@ -31,11 +31,11 @@ public class PlayerResponse {
 		return this;
 	}
 
-	public Instant getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public PlayerResponse setDateOfBirth(Instant dateOfBirth) {
+	public PlayerResponse setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 		return this;
 	}
