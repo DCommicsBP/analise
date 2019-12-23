@@ -10,6 +10,17 @@ public class PlayerResponse {
 	private Genre genre;
 	private double hight;
 	private boolean isCapitain;
+	private String id; 
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public PlayerResponse setId(String id) {
+		this.id = id;
+		return this;
+	}
 
 	public String getName() {
 		return name;

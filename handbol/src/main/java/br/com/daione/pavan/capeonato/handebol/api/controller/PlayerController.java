@@ -33,7 +33,10 @@ public class PlayerController {
 
 	@GetMapping("/")
 	public Flux<PlayerResponse> players() {
-		return this.playerService.listAll();
+		return this.playerService.listAll().doOnError(error -> {
+			this.utilError.internalServerError("Não foi possível listar os registros. ");
+		});
+
 	}
 
 	@GetMapping("/{id}")
@@ -50,8 +53,8 @@ public class PlayerController {
 
 	@DeleteMapping("/{id}")
 	public Mono<Player> delete(@PathVariable String id) {
-		return this.playerService.delete(id)
-				.doOnError(x -> this.utilError.internalServerError("Não foi possível encontrar o dados para excluí-lo"));
+		return this.playerService.delete(id).doOnError(
+				x -> this.utilError.internalServerError("Não foi possível encontrar o dados para excluí-lo"));
 	}
 
 }

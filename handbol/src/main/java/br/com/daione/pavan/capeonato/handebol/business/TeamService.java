@@ -15,35 +15,34 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class TeamService {
-	
+
 	@Autowired
 	private TeamRepository teamRepository;
-	
-	
-	private UtilTeam utilTeam = new UtilTeam();  
-	
+
+	private UtilTeam utilTeam = new UtilTeam();
+
 	@Autowired
-	private UtilError utilError; 
+	private UtilError utilError;
 
 	private Logger LOG = Logger.getLogger(TeamService.class);
 
 	public Mono<TeamResponse> createTeam(TeamRequire team) {
 		return Mono.just(team).map(team1 -> {
-			
+
 			Team validated = this.utilTeam.validateNewTeam(team1);
-			this.teamRepository.save(validated).subscribe(); 
-			TeamResponse teamResponse = this.utilTeam.responseBuilder(validated); 
+			this.teamRepository.save(validated).subscribe();
+			TeamResponse teamResponse = this.utilTeam.responseBuilder(validated);
 			return teamResponse;
-			
+
 		});
 	}
 
-	public Flux<Team> listAll() {
-		return this.teamRepository.findAll(); /*
-		.map(team -> this.utilTeam.responseBuilder(team)).doOnNext(team -> {
+	public Flux<TeamResponse> listAll() {
+		return this.teamRepository.findAll().map(team -> this.utilTeam.responseBuilder(team))
+				.doOnNext(team -> {
 			LOG.info("DADOS ENCONTRDOS COM SUCESSO");
 		});
-		*/
+
 	}
 
 	public Mono<TeamResponse> findTeam(String id) {

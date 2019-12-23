@@ -37,7 +37,7 @@ public class UtilPlayer {
 		this.validate(player);
 
 		return new PlayerResponse().setCapitain(player.isCapitain()).setDateOfBirth(player.getDateOfBirth())
-				.setGenre(player.getGenre()).setHight(player.getHight()).setName(player.getName());
+				.setGenre(player.getGenre()).setHight(player.getHight()).setName(player.getName()).setId(player.getId());
 
 	}
 

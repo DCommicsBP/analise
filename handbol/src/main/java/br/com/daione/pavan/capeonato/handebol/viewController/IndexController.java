@@ -12,6 +12,7 @@ public class IndexController {
 
 	@GetMapping("")
 	public String mainRoute(Model model) {
+		model.addAttribute("teste","teste"); 
 		
 		return "index";
 	}

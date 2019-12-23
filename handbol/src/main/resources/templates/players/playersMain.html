@@ -1,18 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="playersMain">
-	<div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Data de Nascimento</th>
+				<th>Gênero</th>
+				<th>Altura</th>
+				<th>É capitão?</th>
+				<th>Editar</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+		<tbody th:each="player : ${players}">
+			<tr>
+				<td th:text="${player.name}"></td>
+				<td th:text="${player.dateOfBirth}"></td>
+				<td th:text="${player.genre}"></td>
+				<td th:text="${player.hight}"></td>
+				<td th:text="${player.capitain}"></td>
+				<td th:text="${player.id}"></td>
+				<td th:text="${player.id}"></td> 
+			</tr>
+		</tbody>
+		</div>
+		</html>

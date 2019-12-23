@@ -41,8 +41,8 @@ public class TeamController {
 	}
 
 	@GetMapping("/")
-	public Flux<Team> findAll() {
-		Flux<Team> teamsFlux = this.teamService.listAll();
+	public Flux<TeamResponse> findAll() {
+		Flux<TeamResponse> teamsFlux = this.teamService.listAll();
 		return  teamsFlux; 
 	}
 
