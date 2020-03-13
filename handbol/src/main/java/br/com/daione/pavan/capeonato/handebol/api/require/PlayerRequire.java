@@ -14,8 +14,6 @@ public class PlayerRequire {
 	    private boolean isCapitain;
 	    private String id; 
 	    
-	    
-	    
 		public String getName() {
 			return name;
 		}
